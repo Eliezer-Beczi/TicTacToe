@@ -20,12 +20,14 @@ public class TicTacToeController implements Initializable {
     public GridPane gridPane;
     private ArrayList<Label> labels;
 
+    private int depth;
     private AIPlayer aiPlayer;
     private int requiredSymbols;
 
     private String playerSymbol;
-    private String computerSymbol;
     private String playerColor;
+
+    private String computerSymbol;
     private String computerColor;
 
     @Override
@@ -51,12 +53,15 @@ public class TicTacToeController implements Initializable {
 
         switch (size) {
             case 3:
+                depth = -1;
                 requiredSymbols = 3;
                 break;
             case 4:
+                depth = 5;
                 requiredSymbols = 4;
                 break;
             default:
+                depth = 2;
                 requiredSymbols = 5;
         }
 
@@ -67,7 +72,7 @@ public class TicTacToeController implements Initializable {
             setup();
 
             if (!playerStarts) {
-                int[] move = aiPlayer.next(2);
+                int[] move = aiPlayer.next(depth);
                 int index = move[0] * size + move[1];
 
                 labels.get(index).setTextFill(Paint.valueOf(computerColor));
@@ -102,7 +107,7 @@ public class TicTacToeController implements Initializable {
                         return;
                     }
 
-                    int[] move = aiPlayer.next(2);
+                    int[] move = aiPlayer.next(depth);
                     int index = move[0] * size + move[1];
 
                     labels.get(index).setTextFill(Paint.valueOf(computerColor));
