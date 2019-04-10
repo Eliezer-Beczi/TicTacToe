@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/AIPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/AIPlayer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/TicTacToeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/TicTacToeController.java" afterDir="false" />
@@ -61,34 +60,25 @@
     <favorites_list name="JavaFxApplication" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/core/AIPlayer.java">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/core/TicTacToeController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3232">
-              <caret line="405" selection-start-line="405" selection-end-line="405" />
+            <state relative-caret-position="285">
+              <caret line="63" column="26" lean-forward="true" selection-start-line="63" selection-start-column="26" selection-end-line="63" selection-end-column="26" />
               <folding>
-                <element signature="method#AIPlayer#0;class#AIPlayer#0" />
-                <element signature="method#generateMoves#0;class#AIPlayer#0" />
-                <element signature="method#evaluate#0;class#AIPlayer#0" />
-                <element signature="method#evaluateRow#0;class#AIPlayer#0" />
-                <element signature="method#evaluateColumn#0;class#AIPlayer#0" />
-                <element signature="method#checkRowColumn#0;class#AIPlayer#0" />
-                <element signature="method#checkColumn#0;class#AIPlayer#0" />
+                <element signature="imports" expanded="true" />
+                <element signature="method#initialize#0;class#TicTacToeController#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/core/TicTacToeController.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/core/AIPlayer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="72" selection-start-line="72" selection-end-line="72" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#initialize#0;class#TicTacToeController#0" />
-              </folding>
+            <state relative-caret-position="272">
+              <caret line="36" column="39" lean-forward="true" selection-start-line="36" selection-start-column="39" selection-end-line="36" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -118,8 +108,8 @@
         <option value="$PROJECT_DIR$/src/core/ticTacToe.fxml" />
         <option value="$PROJECT_DIR$/src/core/Main.java" />
         <option value="$PROJECT_DIR$/src/core/Controller.java" />
-        <option value="$PROJECT_DIR$/src/core/TicTacToeController.java" />
         <option value="$PROJECT_DIR$/src/core/AIPlayer.java" />
+        <option value="$PROJECT_DIR$/src/core/TicTacToeController.java" />
       </list>
     </option>
   </component>
@@ -145,8 +135,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -173,6 +161,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -303,7 +293,7 @@
     <frame x="-1" y="-22" width="1368" height="791" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.24090908" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.27272728" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" />
       <window_info id="Designer" order="3" />
@@ -312,7 +302,7 @@
       <window_info id="Capture Tool" order="6" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32440478" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32886904" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -323,7 +313,7 @@
       <window_info anchor="bottom" id="Changes" order="10" />
       <window_info anchor="bottom" id="Profiler" order="11" />
       <window_info anchor="bottom" id="Event Log" order="12" />
-      <window_info anchor="bottom" id="Messages" order="13" weight="0.32973805" />
+      <window_info anchor="bottom" id="Messages" order="13" weight="0.32886904" />
       <window_info anchor="bottom" id="Terminal" order="14" weight="0.32973805" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -349,20 +339,20 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/core/startWindow.java" />
     <entry file="file://$PROJECT_DIR$/src/core/ticTacToe.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="164" selection-start-line="5" selection-start-column="164" selection-end-line="5" selection-end-column="164" />
         </state>
       </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/core/startWindow.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="223">
           <caret line="49" column="43" selection-start-line="49" selection-start-column="43" selection-end-line="49" selection-end-column="43" />
         </state>
       </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/core/Main.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -386,24 +376,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/core/AIPlayer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3232">
-          <caret line="405" selection-start-line="405" selection-end-line="405" />
-          <folding>
-            <element signature="method#AIPlayer#0;class#AIPlayer#0" />
-            <element signature="method#generateMoves#0;class#AIPlayer#0" />
-            <element signature="method#evaluate#0;class#AIPlayer#0" />
-            <element signature="method#evaluateRow#0;class#AIPlayer#0" />
-            <element signature="method#evaluateColumn#0;class#AIPlayer#0" />
-            <element signature="method#checkRowColumn#0;class#AIPlayer#0" />
-            <element signature="method#checkColumn#0;class#AIPlayer#0" />
-          </folding>
+        <state relative-caret-position="272">
+          <caret line="36" column="39" lean-forward="true" selection-start-line="36" selection-start-column="39" selection-end-line="36" selection-end-column="39" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/core/TicTacToeController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="72" selection-start-line="72" selection-end-line="72" />
+        <state relative-caret-position="285">
+          <caret line="63" column="26" lean-forward="true" selection-start-line="63" selection-start-column="26" selection-end-line="63" selection-end-column="26" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#initialize#0;class#TicTacToeController#0" />

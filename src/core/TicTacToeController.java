@@ -57,11 +57,11 @@ public class TicTacToeController implements Initializable {
                 requiredSymbols = 3;
                 break;
             case 4:
-                depth = 5;
+                depth = 8;
                 requiredSymbols = 4;
                 break;
             default:
-                depth = 2;
+                depth = 3;
                 requiredSymbols = 5;
         }
 
@@ -129,30 +129,35 @@ public class TicTacToeController implements Initializable {
     }
 
     private boolean gameOver() {
-        if (aiPlayer.hasWon(playerSymbol)) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("Congratulations!");
-            alert.setContentText("You Win!");
-            alert.showAndWait();
-            closeWindow();
-            return true;
-        } else if (aiPlayer.hasWon(computerSymbol)) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("The game you just can't win.");
-            alert.setContentText("You Lose!");
-            alert.showAndWait();
-            closeWindow();
-            return true;
-        } else if (aiPlayer.generateMoves().isEmpty()) {
+        int result = aiPlayer.gameOver();
+
+        if (result == 42) {
+            return false;
+        }
+
+        if (result == 0) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Keep calm...");
             alert.setContentText("It's a Draw!");
             alert.showAndWait();
             closeWindow();
-            return true;
         } else {
-            return false;
+            if ((result == 1 && playerSymbol.equals("X")) || (result == -1 && playerSymbol.equals("O"))) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText("Congratulations!");
+                alert.setContentText("You Win!");
+                alert.showAndWait();
+                closeWindow();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText("The game you just can't win.");
+                alert.setContentText("You Lose!");
+                alert.showAndWait();
+                closeWindow();
+            }
         }
+
+        return true;
     }
 
     private void closeWindow() {

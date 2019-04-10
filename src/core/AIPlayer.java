@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class AIPlayer {
     private int size;
     private String[][] board;
+    private ArrayList<int[]> emptyCells;
 
     private String mySymbol;
     private String opponentSymbol;
@@ -12,9 +13,14 @@ public class AIPlayer {
     private int requiredSymbols;
     private int[][] heuristicArray;
 
+    private int lastRowIndex;
+    private int lastColIndex;
+    private String lastSymbol;
+
     public AIPlayer(int size, int requiredSymbols, String mySymbol, String opponentSymbol) {
         this.size = size;
         board = new String[size][size];
+        emptyCells = new ArrayList<>();
 
         this.requiredSymbols = requiredSymbols;
         heuristicArray = new int[requiredSymbols + 1][requiredSymbols + 1];
@@ -22,6 +28,7 @@ public class AIPlayer {
         for (int i = 0; i < size; ++i) {
             for (int j = 0; j < size; ++j) {
                 board[i][j] = "";
+                emptyCells.add(new int[]{i, j});
             }
         }
 
@@ -33,16 +40,31 @@ public class AIPlayer {
 
         this.mySymbol = mySymbol;
         this.opponentSymbol = opponentSymbol;
+
+        lastRowIndex = -1;
+        lastColIndex = -1;
+        lastSymbol = "";
     }
 
     public void updateBoard(int row, int col, String symbol) {
         board[row][col] = symbol;
+
+        for (int[] cell : emptyCells) {
+            if (cell[0] == row && cell[1] == col) {
+                emptyCells.remove(cell);
+                break;
+            }
+        }
+
+        lastRowIndex = row;
+        lastColIndex = col;
+        lastSymbol = symbol;
     }
 
     public int[] next(int depth) {
         int[] result;
 
-        if (size == 3) {
+        if (depth == -1) {
             result = minimax(mySymbol, Integer.MIN_VALUE, Integer.MAX_VALUE);
         } else {
             result = minimax(depth, mySymbol, Integer.MIN_VALUE, Integer.MAX_VALUE);
@@ -53,41 +75,50 @@ public class AIPlayer {
 
     // full depth minimax WITH alpha–beta pruning
     private int[] minimax(String symbol, int alpha, int beta) {
-        ArrayList<int[]> moves = generateMoves();
-
         int score;
         int bestRow = -1;
         int bestCol = -1;
 
-        if (hasWon(mySymbol)) {
-            return new int[]{1, bestRow, bestCol};
-        } else if (hasWon(opponentSymbol)) {
-            return new int[]{-1, bestRow, bestCol};
-        } else if (moves.isEmpty()) {
+        if (hasWon(lastRowIndex, lastColIndex, lastSymbol)) {
+            if (lastSymbol.equals(mySymbol)) {
+                return new int[]{1, bestRow, bestCol};
+            } else {
+                return new int[]{-1, bestRow, bestCol};
+            }
+        } else if (emptyCells.isEmpty()) {
             return new int[]{0, bestRow, bestCol};
         } else {
-            for (int[] move : moves) {
-                board[move[0]][move[1]] = symbol;
+            for (int i = 0; i < emptyCells.size(); ++i) {
+                int currRow = emptyCells.get(i)[0];
+                int currCol = emptyCells.get(i)[1];
+
+                board[currRow][currCol] = symbol;
+                emptyCells.remove(i);
+
+                lastRowIndex = currRow;
+                lastColIndex = currCol;
+                lastSymbol = symbol;
 
                 if (symbol.equals(mySymbol)) {
                     score = minimax(opponentSymbol, alpha, beta)[0];
 
                     if (score > alpha) {
                         alpha = score;
-                        bestRow = move[0];
-                        bestCol = move[1];
+                        bestRow = currRow;
+                        bestCol = currCol;
                     }
                 } else {
                     score = minimax(mySymbol, alpha, beta)[0];
 
                     if (score < beta) {
                         beta = score;
-                        bestRow = move[0];
-                        bestCol = move[1];
+                        bestRow = currRow;
+                        bestCol = currCol;
                     }
                 }
 
-                board[move[0]][move[1]] = "";
+                board[currRow][currCol] = "";
+                emptyCells.add(i, new int[]{currRow, currCol});
 
                 if (alpha >= beta) {
                     break;
@@ -104,43 +135,52 @@ public class AIPlayer {
 
     // depth limited minimax WITH alpha–beta pruning
     private int[] minimax(int depth, String symbol, int alpha, int beta) {
-        ArrayList<int[]> moves = generateMoves();
-
         int score;
         int bestRow = -1;
         int bestCol = -1;
 
-        if (hasWon(mySymbol)) {
-            return new int[]{heuristicArray[requiredSymbols][0], bestRow, bestCol};
-        } else if (hasWon(opponentSymbol)) {
-            return new int[]{heuristicArray[0][requiredSymbols], bestRow, bestCol};
-        } else if (moves.isEmpty()) {
+        if (hasWon(lastRowIndex, lastColIndex, lastSymbol)) {
+            if (lastSymbol.equals(mySymbol)) {
+                return new int[]{heuristicArray[requiredSymbols][0], bestRow, bestCol};
+            } else {
+                return new int[]{heuristicArray[0][requiredSymbols], bestRow, bestCol};
+            }
+        } else if (emptyCells.isEmpty()) {
             return new int[]{0, bestRow, bestCol};
         } else if (depth == 0) {
             return new int[]{evaluate(), bestRow, bestCol};
         } else {
-            for (int[] move : moves) {
-                board[move[0]][move[1]] = symbol;
+            for (int i = 0; i < emptyCells.size(); ++i) {
+                int currRow = emptyCells.get(i)[0];
+                int currCol = emptyCells.get(i)[1];
+
+                board[currRow][currCol] = symbol;
+                emptyCells.remove(i);
+
+                lastRowIndex = currRow;
+                lastColIndex = currCol;
+                lastSymbol = symbol;
 
                 if (symbol.equals(mySymbol)) {
                     score = minimax(depth - 1, opponentSymbol, alpha, beta)[0];
 
                     if (score > alpha) {
                         alpha = score;
-                        bestRow = move[0];
-                        bestCol = move[1];
+                        bestRow = currRow;
+                        bestCol = currCol;
                     }
                 } else {
                     score = minimax(depth - 1, mySymbol, alpha, beta)[0];
 
                     if (score < beta) {
                         beta = score;
-                        bestRow = move[0];
-                        bestCol = move[1];
+                        bestRow = currRow;
+                        bestCol = currCol;
                     }
                 }
 
-                board[move[0]][move[1]] = "";
+                board[currRow][currCol] = "";
+                emptyCells.add(i, new int[]{currRow, currCol});
 
                 if (alpha >= beta) {
                     break;
@@ -155,18 +195,59 @@ public class AIPlayer {
         }
     }
 
-    public ArrayList<int[]> generateMoves() {
-        ArrayList<int[]> moves = new ArrayList<>();
+    private boolean hasWon(int row, int col, String symbol) {
+        // if computer starts and the board is empty
+        if (row == -1) {
+            return false;
+        }
 
-        for (int i = 0; i < size; ++i) {
-            for (int j = 0; j < size; ++j) {
-                if (board[i][j].isEmpty()) {
-                    moves.add(new int[]{i, j});
-                }
+        // check row and column for the current position
+        if (checkRow(row, symbol) || checkColumn(col, symbol)) {
+            return true;
+        }
+
+        // check the two diagonals for the current position
+        int counter = 1;
+
+        for (int i = 1; (row - i) >= 0 && (col - i) >= 0; ++i) {
+            if (board[row - i][col - i].equals(symbol)) {
+                ++counter;
+            } else {
+                break;
             }
         }
 
-        return moves;
+        for (int i = 1; (row + i) < size && (col + i) < size; ++i) {
+            if (board[row + i][col + i].equals(symbol)) {
+                ++counter;
+            } else {
+                break;
+            }
+        }
+
+        if (counter >= requiredSymbols) {
+            return true;
+        }
+
+        counter = 1;
+
+        for (int i = 1; (row - i) >= 0 && (col + i) < size; ++i) {
+            if (board[row - i][col + i].equals(symbol)) {
+                ++counter;
+            } else {
+                break;
+            }
+        }
+
+        for (int i = 1; (row + i) < size && (col - i) >= 0; ++i) {
+            if (board[row + i][col - i].equals(symbol)) {
+                ++counter;
+            } else {
+                break;
+            }
+        }
+
+        return counter >= requiredSymbols;
     }
 
     private int evaluate() {
@@ -327,79 +408,20 @@ public class AIPlayer {
         return false;
     }
 
-    private boolean checkDiagonal(int direction, String symbol) {
-        if (direction == 1) {
-            for (int diagonal = 0; diagonal < size - requiredSymbols + 1; ++diagonal) {
-                int belowCounter = 0;
-                int aboveCounter = 0;
-
-                for (int row = diagonal; row < size; ++row) {
-                    String belowSymbol = board[row][row - diagonal];
-                    String aboveSymbol = board[row - diagonal][row];
-
-                    if (belowSymbol.equals(symbol)) {
-                        ++belowCounter;
-
-                        if (belowCounter == requiredSymbols) {
-                            return true;
-                        }
-                    } else {
-                        belowCounter = 0;
-                    }
-
-                    if (aboveSymbol.equals(symbol)) {
-                        ++aboveCounter;
-
-                        if (aboveCounter == requiredSymbols) {
-                            return true;
-                        }
-                    } else {
-                        aboveCounter = 0;
-                    }
-                }
-            }
-        } else {
-            for (int diagonal = 0; diagonal < size - requiredSymbols + 1; ++diagonal) {
-                int belowCounter = 0;
-                int aboveCounter = 0;
-
-                for (int row = diagonal; row < size; ++row) {
-                    String belowSymbol = board[row][size - (row + 1) + diagonal];
-                    String aboveSymbol = board[row - diagonal][size - (row + 1)];
-
-                    if (belowSymbol.equals(symbol)) {
-                        ++belowCounter;
-
-                        if (belowCounter == requiredSymbols) {
-                            return true;
-                        }
-                    } else {
-                        belowCounter = 0;
-                    }
-
-                    if (aboveSymbol.equals(symbol)) {
-                        ++aboveCounter;
-
-                        if (aboveCounter == requiredSymbols) {
-                            return true;
-                        }
-                    } else {
-                        aboveCounter = 0;
-                    }
-                }
+    // returns 1 if X won, -1 if O won, 0 if it's a draw, 42 if it's not game over
+    public int gameOver() {
+        if (hasWon(lastRowIndex, lastColIndex, lastSymbol)) {
+            if (lastSymbol.equals("X")) {
+                return 1;
+            } else {
+                return -1;
             }
         }
 
-        return false;
-    }
-
-    public boolean hasWon(String symbol) {
-        for (int i = 0; i < size; ++i) {
-            if (checkRow(i, symbol) || checkColumn(i, symbol)) {
-                return true;
-            }
+        if (emptyCells.isEmpty()) {
+            return 0;
         }
 
-        return checkDiagonal(1, symbol) || checkDiagonal(-1, symbol);
+        return 42;
     }
 }
